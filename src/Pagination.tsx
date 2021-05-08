@@ -13,9 +13,10 @@ const Box = styled.div<{ current: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => (props.current ? "red" : "white")};
+
   transition: 0.4s ease-in-out;
-  color: ${(props) => (props.current ? "red" : "black")};
+  color: ${(props) => (props.current ? "white" : "black")};
   border-radius: 3px;
   cursor: pointer;
   :not(:first-child) {
@@ -36,22 +37,21 @@ export default function Pagination({
 }: IProps) {
   const arr = [];
   const paginate = Math.ceil(totalPosts / postPerPage);
-  const [selected, setSelected] = useState(0);
+
+  const [isClick, setisClick] = useState(0);
 
   for (let i = 1; i <= paginate; i++) {
     arr.push(i);
   }
 
-  const handleColor = (value: number) => {
-    setSelected(value);
-  };
+  const handleColor = (value: number) => setisClick(value);
 
   return (
     <Container>
       {arr.map((number) => {
         return (
           <Box
-            current={number === selected}
+            current={number === isClick}
             key={number}
             onClick={() => {
               paginateFn(number);
